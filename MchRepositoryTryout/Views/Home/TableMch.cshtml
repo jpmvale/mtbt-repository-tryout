@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MchRepositoryTryout.Models.Mch>
+
+@{
+    ViewBag.Title = "TableMch";
+}
+
+<h2>MTBT Máquinas de Chave</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.InstallLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trains)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MTBT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.InstallLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trains)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MTBT)
+        </td>
+    </tr>
+}
+
+</table>

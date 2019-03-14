@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MchRepositoryTryout.Models.TU>
+
+@{
+    ViewBag.Title = "TableTU";
+}
+
+<h2>MTBT Report</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Km)
+        </th>
+        <th>
+            Informações
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Km)
+        </td>
+        <td>
+            <table class="table">
+                <tr class="bg-primary jp">
+                    <th>Nome</th>
+                    <th>Trens</th>
+                    <th>MTBT</th>
+                </tr>
+                @foreach (var mch in item.MchsInTu)
+                {
+                <tr>
+                    <td>@mch.InstallLocation</td>
+                    <td>@mch.Trains</td>
+                    <td>@mch.MTBT</td>                    
+                </tr>
+                }
+            </table>
+        </td>
+    </tr>
+}
+
+</table>

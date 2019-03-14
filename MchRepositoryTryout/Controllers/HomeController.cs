@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MchRepositoryTryout.Models;
+using MchRepositoryTryout.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,22 @@ namespace MchRepositoryTryout.Controllers
 {
     public class HomeController : Controller
     {
+        List<Mch> mchs = MchService.GetMchs();
+        List<TU> tus = TuService.GetTu();
+
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult TableMch()
+        {
+            return View(mchs);
+        }
+
+        public ActionResult TableTU()
+        {
+            return View(tus);
         }
 
         public ActionResult About()
