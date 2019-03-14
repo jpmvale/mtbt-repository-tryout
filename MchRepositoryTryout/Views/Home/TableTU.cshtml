@@ -4,15 +4,15 @@
     ViewBag.Title = "TableTU";
 }
 
-<h2>MTBT Report</h2>
+<h2 class="center jumbotron">MTBT Report</h2>
 
-<table class="table">
-    <tr>
+<table class="table innerTable">
+    <tr class="tableHeader">
         <th>
             @Html.DisplayNameFor(model => model.Km)
         </th>
         <th>
-            Informações
+            Máquinas de Chave no TU
         </th>
         <th></th>
     </tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.Km)
         </td>
         <td>
-            <table class="table">
+            <table class="table innerTable">
                 <tr class="bg-primary jp">
-                    <th>Nome</th>
+                    <th>Nome da Máquina de Chave</th>
                     <th>Trens</th>
                     <th>MTBT</th>
                 </tr>

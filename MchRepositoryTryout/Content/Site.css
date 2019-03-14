@@ -22,3 +22,17 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.center {
+    text-align: center;
+}
+
+.tableHeader {
+    background-color: black;
+    color: white;
+}
+
+.innerTable {
+    border: 1px solid black;
+    text-align: center;
+}
