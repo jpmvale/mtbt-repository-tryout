@@ -36,3 +36,7 @@ textarea {
     border: 1px solid black;
     text-align: center;
 }
+
+.vertical {
+    vertical-align: middle !important;
+}

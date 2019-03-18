@@ -4,42 +4,61 @@
     ViewBag.Title = "TableTU";
 }
 
-<h2 class="center jumbotron">MTBT Report</h2>
+<h2 class="center">MTBT Report</h2>
 
 <table class="table innerTable">
     <tr class="tableHeader">
-        <th>
+        <th class="center">
             @Html.DisplayNameFor(model => model.Km)
         </th>
-        <th>
-            Máquinas de Chave no TU
+        <th class="center">
+            Aparelhos de mudança de via no TU
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Km)
-        </td>
-        <td>
-            <table class="table innerTable">
-                <tr class="bg-primary jp">
-                    <th>Nome da Máquina de Chave</th>
-                    <th>Trens</th>
-                    <th>MTBT</th>
-                </tr>
-                @foreach (var mch in item.MchsInTu)
-                {
-                <tr>
-                    <td>@mch.InstallLocation</td>
-                    <td>@mch.Trains</td>
-                    <td>@mch.MTBT</td>                    
-                </tr>
-                }
-            </table>
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr class="innerTable">
+            <td class="vertical">
+                @item.Km
+            </td>
+            <td>
+                <table class="table innerTable">
+                    <tr class="bg-dark">
+                        <th class="center text-white">AMV</th>
+                        <th class="center text-white">Dados MCH</th>
+                    </tr>
+                    @foreach (var amv in item.AmvsInTU)
+                    {
+                        <tr>
+                            <td class="vertical">@amv.AmvNumber</td>
+                            <td>
+                                <table class="table innerTable">
+                                    <tr class="bg-secondary">
+                                        <th class="center text-white">MCH</th>
+                                        <th class="center text-white">Local Instalação</th>
+                                        <th class="center text-white">Trens</th>
+                                        <th class="center text-white">MTBT</th>
+                                    </tr>
+                                    @foreach (var mch in amv.MchsInAmv)
+                                    {
+                                        <tr>
+                                            <td>@mch.Id</td>
+                                            <td>@mch.InstallLocation</td>
+                                            <td>@mch.Trains</td>
+                                            <td class="text-danger">@mch.MTBT</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    }
 </table>
+@section Scripts{
+    @Scripts.Render("~/bundles/tableTU")
+}
