@@ -40,3 +40,15 @@ textarea {
 .vertical {
     vertical-align: middle !important;
 }
+
+.mchDetail {
+    color: blue;
+    background-color: white;
+    font-size: 17px;
+}
+
+.amvDetail {
+    color: blue;
+    background-color: white;
+    font-size: 17px;
+}
