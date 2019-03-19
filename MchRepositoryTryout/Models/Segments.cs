@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace MchRepositoryTryout.Models
 {
-    [Table("tbsegments")]
+    [Table("tbsegment")]
     public class Segments 
     {
-        [Column("location")]
+        [Key, Column("location", Order = 0)]
         public int Location { get; set; }
-        [Column("segment")]
+        [Column("segment", Order = 1)]
         public string Segment { get; set; }
+        //public int Trains { get; set; }
     }
 }

@@ -17,5 +17,6 @@ namespace MchRepositoryTryout.Models
         public int Km { get; set; }
         public TypesOfTU TypeOfTU { get; set; }
         public List<Amv> AmvsInTU { get; set; } = new List<Amv>();
+        public int Trains { get; set; }
     }
 }

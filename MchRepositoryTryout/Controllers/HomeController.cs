@@ -1,4 +1,5 @@
-﻿using MchRepositoryTryout.Models;
+﻿using MchRepositoryTryout.DAL;
+using MchRepositoryTryout.Models;
 using MchRepositoryTryout.Services;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace MchRepositoryTryout.Controllers
 {
     public class HomeController : Controller
     {
-        List<Mch> mchs = MchService.GetMchs();
-        List<TU> tus = TuService.GetTu();
+        readonly List<Mch> mchs = MchService.GetMchs();
+        readonly List<TU> tus = TuService.GetTu();
 
         public ActionResult Index()
         {

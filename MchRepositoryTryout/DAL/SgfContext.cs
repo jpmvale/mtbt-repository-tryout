@@ -5,15 +5,17 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
+
 namespace MchRepositoryTryout.DAL
-{
+{    
     public class SgfContext : DbContext
-    {
+    {        
         public SgfContext() : base("name=SgfContext")
         {
-             
+              
         }
 
-        public virtual IDbSet<Segments> Segments { get; set; }
+        public IDbSet<Segments> Segments { get; set; }
+        public IDbSet<TrainMovSegments> TrainMovSegments { get; set; }
     }
 }
