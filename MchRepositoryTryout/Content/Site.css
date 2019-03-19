@@ -52,3 +52,11 @@ textarea {
     background-color: white;
     font-size: 17px;
 }
+
+.lowPadding {
+    padding: 0.05rem !important;
+}
+
+.noMarginBottom {
+    margin-bottom : 0px !important;
+}

@@ -6,50 +6,50 @@
 
 <h2 class="center">MTBT Report</h2>
 
-<table class="table innerTable">
-    <tr class="tableHeader">
-        <th class="center">
+<table class="table innerTable lowPadding noMarginBottom">
+    <tr class="tableHeader lowPadding">
+        <th class="center lowPadding">
             @Html.DisplayNameFor(model => model.Km)
         </th>
-        <th class="center">
+        <th class="center lowPadding">
             Aparelhos de mudança de via no TU
         </th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr class="innerTable">
-            <td class="vertical">
+        <tr class="innerTable lowPadding">
+            <td class="vertical lowPadding">
                 @item.Km
             </td>
-            <td>
-                <table class="table innerTable">
-                    <tr class="bg-dark">
-                        <th class="center text-white">AMV</th>
-                        <th class="center text-white">Dados MCH</th>
-                        <th class="amvDetail">+</th>
+            <td class="lowPadding">
+                <table class="table innerTable lowPadding noMarginBottom">
+                    <tr class="bg-dark lowPadding">
+                        <th class="center text-white lowPadding">AMV</th>
+                        <th class="center text-white lowPadding">Dados MCH</th>
+                        <th class="amvDetail lowPadding">+</th>
                     </tr>
                     @foreach (var amv in item.AmvsInTU)
                     {
-                        <tr class="amvLine">
-                            <td class="vertical">@amv.AmvNumber</td>
-                            <td>
-                                <table class="table innerTable">
-                                    <tr class="bg-secondary">
-                                        <th class="center text-white">Id</th>
-                                        <th class="center text-white">Nome</th>
-                                        <th class="center text-white">Trens</th>
-                                        <th class="center text-white">MTBT</th>
-                                        <th class="mchDetail">+</th>
+                        <tr class="amvLine lowPadding">
+                            <td class="vertical lowPadding">@amv.AmvNumber</td>
+                            <td class="lowPadding">
+                                <table class="table innerTable noMarginBottom ">
+                                    <tr class="bg-secondary lowPadding">
+                                        <th class="center text-white lowPadding">Id</th>
+                                        <th class="center text-white lowPadding">Nome</th>
+                                        <th class="center text-white lowPadding">Trens</th>
+                                        <th class="center text-white lowPadding">MTBT</th>
+                                        <th class="mchDetail lowPadding">+</th>
                                     </tr>
                                     @foreach (var mch in amv.MchsInAmv)
                                     {
-                                        <tr class="mchLine">
-                                            <td>@mch.Id</td>
-                                            <td>@mch.InstallLocation</td>
-                                            <td>@mch.Trains</td>
-                                            <td class="text-danger">@mch.MTBT</td>
-                                            <td></td>
+                                        <tr class="mchLine lowPadding">
+                                            <td class="lowPadding">@mch.Id</td>
+                                            <td class="lowPadding">@mch.InstallLocation</td>
+                                            <td class="lowPadding">@mch.Trains</td>
+                                            <td class="text-danger lowPadding">@mch.MTBT</td>
+                                            <td class="lowPadding"></td>
                                         </tr>
                                     }
                                 </table>
