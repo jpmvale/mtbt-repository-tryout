@@ -157,6 +157,7 @@
     <Compile Include="Models\Amv.cs" />
     <Compile Include="Models\Mch.cs" />
     <Compile Include="Models\Segments.cs" />
+    <Compile Include="Models\Train.cs" />
     <Compile Include="Models\TrainMovSegments.cs" />
     <Compile Include="Models\TU.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

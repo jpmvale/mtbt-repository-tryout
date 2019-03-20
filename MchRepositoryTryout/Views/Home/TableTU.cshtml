@@ -2,9 +2,26 @@
 
 @{
     ViewBag.Title = "TableTU";
+    var lvsede = "";
+    if (ViewBag.Sede != null) { lvsede = ViewBag.Sede; }
 }
 
 <h2 class="center">MTBT Report</h2>
+<h4 class="center"> Sede Selecionada:</h4>
+<h4 class="center text-danger">@lvsede</h4>
+@using (Html.BeginForm("TableTU", "Home", FormMethod.Post))
+{
+    <div class="form-group">
+        <label class="col-form-label">SEDE:</label>
+        <select class="form-control" onchange="form.submit()" name="sede">
+            @foreach (string item in ViewBag.Items)
+            {
+                var flag = lvsede == @item ? "selected" : "";
+                <option value="@item" @flag>@item</option>
+            }
+        </select>
+    </div>
+}
 
 <table class="table innerTable lowPadding noMarginBottom">
     <tr class="tableHeader lowPadding">

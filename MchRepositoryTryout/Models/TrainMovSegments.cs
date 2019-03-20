@@ -12,6 +12,7 @@ namespace MchRepositoryTryout.Models
     {
         [Key, Column("train_id", Order = 0)]
         public long TrainID { get; set; }
+        public Train Train { get; set; }
         [Key, Column("data_ocup", Order = 1)]
         public DateTime OcupationDate { get; set; }
         [Key, Column("location", Order = 2)]
@@ -20,6 +21,8 @@ namespace MchRepositoryTryout.Models
         public string Segment { get; set; }
         [Column("track")]
         public int Track { get; set; }
+        [Column("direction")]
+        public int Direction { get; set; }
 
     }
 }
