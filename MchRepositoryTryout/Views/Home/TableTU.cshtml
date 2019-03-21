@@ -3,7 +3,12 @@
 @{
     ViewBag.Title = "TableTU";
     var lvsede = "";
+    var lvInitalDate = default(DateTime);
+    var lvFinalDate = default(DateTime);
     if (ViewBag.Sede != null) { lvsede = ViewBag.Sede; }
+    if (ViewBag.InitialDate != null) { lvInitalDate = ViewBag.InitialDate; }
+    if (ViewBag.FinalDate != null) { lvFinalDate = ViewBag.FinalDate; }
+
 }
 
 <h2 class="center">MTBT Report</h2>
@@ -24,11 +29,11 @@
         </div>
         <div class="form-group ml-5">
             <label class="col-form-label">Data Inicial:</label>
-            <input type="datetime" class="form-control dates" id="dataInicialId" name="initialDate" placeholder="dd/MM/aaaa">
+            <input type="datetime" class="form-control dates" id="dataInicialId" name="initialDate" placeholder="dd/MM/yyyy" value="@lvInitalDate.ToString("dd/MM/yyyy")"> 
         </div>
         <div class="form-group ml-5">
             <label class="col-form-label">Data Final:</label>
-            <input type="datetime" class="form-control dates" id="dataFinalId" name="finalDate" placeholder="dd/MM/aaaa">
+            <input type="datetime" class="form-control dates" id="dataFinalId" name="finalDate" placeholder="dd/MM/yyyy" value="@lvFinalDate.ToString("dd/MM/yyyy")">
         </div>
         <button class="btn btn-primary">Filtrar</button>
     </div>

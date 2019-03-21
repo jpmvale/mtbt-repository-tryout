@@ -46,6 +46,8 @@ namespace MchRepositoryTryout.Controllers
 
             List<TU> tus = TuService.GetTu(lvInitialDate, lvFinalDate, init, end);
             string[] items = { "TODOS", "SLZ", "SIS", "AAL", "NVA", "ACD", "SPAB", "MBA", "CJS" };
+            ViewBag.InitialDate = lvInitialDate;
+            ViewBag.FinalDate = lvFinalDate;
             ViewBag.Items = items;
             return View(tus);
         }
