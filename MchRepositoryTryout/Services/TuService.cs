@@ -10,7 +10,7 @@ namespace MchRepositoryTryout.Services
 {
     public class TuService
     {
-        public static List<TU> GetTu(int initialKM = 0, int finalKM = 892)
+        public static List<TU> GetTu(DateTime initialDate, DateTime finalDate, int initialKM = 0, int finalKM = 892)
         {
             var sgfContext = new SgfContext();
             var segments = sgfContext.Segments.Where(x => x.Segment == "WT" && x.Location >= initialKM &&
@@ -21,7 +21,7 @@ namespace MchRepositoryTryout.Services
 
             foreach (var segment in segments)
             {
-                var trainBySegmentObjects = GetTrainsBySegment(segment.Location);
+                var trainBySegmentObjects = GetTrainsBySegment(sgfContext, segment.Location, initialDate, finalDate);
                 int trainBySegment = trainBySegmentObjects.Count;
                 var trains = trainBySegmentObjects.Select(x => x.TrainID).Distinct();
                 Dictionary<string, int> keyValuePairs = new Dictionary<string, int>()
@@ -83,47 +83,46 @@ namespace MchRepositoryTryout.Services
                       }
                   });
             }
-            sgfContext.Dispose();
-
-            List<TrainMovSegments> GetTrainsBySegment(int location)
-            {
-                return sgfContext.TrainMovSegments.Include(x => x.Train).Where(x => x.Segment == "WT" &&
-                       x.Train.TrainName.StartsWith("M") &&
-                       x.Location == location && x.OcupationDate.Year == 2019 &&
-                       x.OcupationDate.Month == 3).ToList();
-            }
-
-            List<string> GetMchByOccupations(List<int> tracks, int direction)
-            {
-                var amv_1 = new List<string>() { "W11A", "W11B", "W11C" };
-                var amv_2 = new List<string>() { "W21C", "W21B", "W21A" };
-                var amv_3 = new List<string>() { "W12C", "W12B", "W12A" };
-                var amv_4 = new List<string>() { "W22A", "W22B", "W22C" };
-                var myList = new List<string>();
-
-                if (tracks.Count == 1 || tracks.Distinct().Count() == 1)
-                {
-                    if (tracks[0] == 1)
-                        myList = myList.Concat(amv_1).Concat(amv_2).ToList();
-                    else if (tracks[0] == 2)
-                        myList = myList.Concat(amv_3).Concat(amv_4).ToList();
-                }
-                else if (tracks.Count == 2)
-                {
-                    myList = myList.Concat(amv_3).Concat(amv_4).ToList();
-
-                    if (tracks[0] == 1 && tracks[1] == 2)
-                        myList = direction == 1 ? myList = myList.Concat(amv_1).ToList() :
-                                                  myList = myList.Concat(amv_2).ToList();
-                    else
-                        myList = direction == 1 ? myList = myList.Concat(amv_2).ToList() :
-                                                  myList = myList.Concat(amv_1).ToList();
-                }
-                return myList;
-            }
 
             sgfContext.Dispose();
             return tu;
+        }
+
+        private static List<TrainMovSegments> GetTrainsBySegment(SgfContext sgfContext, int location, DateTime initialDate,
+                                                                 DateTime finalDate)
+        {
+            return sgfContext.TrainMovSegments.Include(x => x.Train).
+                    Where(x => x.Segment == "WT" && x.Train.TrainName.StartsWith("M") &&
+                    x.Location == location && x.OcupationDate >= initialDate && x.OcupationDate <= finalDate).ToList();
+        }
+
+        private static List<string> GetMchByOccupations(List<int> tracks, int direction)
+        {
+            var amv_1 = new List<string>() { "W11A", "W11B", "W11C" };
+            var amv_2 = new List<string>() { "W21C", "W21B", "W21A" };
+            var amv_3 = new List<string>() { "W12C", "W12B", "W12A" };
+            var amv_4 = new List<string>() { "W22A", "W22B", "W22C" };
+            var myList = new List<string>();
+
+            if (tracks.Count == 1 || tracks.Distinct().Count() == 1)
+            {
+                if (tracks[0] == 1)
+                    myList = myList.Concat(amv_1).Concat(amv_2).ToList();
+                else if (tracks[0] == 2)
+                    myList = myList.Concat(amv_3).Concat(amv_4).ToList();
+            }
+            else if (tracks.Count == 2)
+            {
+                myList = myList.Concat(amv_3).Concat(amv_4).ToList();
+
+                if (tracks[0] == 1 && tracks[1] == 2)
+                    myList = direction == 1 ? myList = myList.Concat(amv_1).ToList() :
+                                              myList = myList.Concat(amv_2).ToList();
+                else
+                    myList = direction == 1 ? myList = myList.Concat(amv_2).ToList() :
+                                              myList = myList.Concat(amv_1).ToList();
+            }
+            return myList;
         }
     }
 }

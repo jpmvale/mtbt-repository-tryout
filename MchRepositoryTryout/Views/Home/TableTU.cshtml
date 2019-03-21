@@ -11,15 +11,26 @@
 <h4 class="center text-danger">@lvsede</h4>
 @using (Html.BeginForm("TableTU", "Home", FormMethod.Post))
 {
-    <div class="form-group">
-        <label class="col-form-label">SEDE:</label>
-        <select class="form-control" onchange="form.submit()" name="sede">
-            @foreach (string item in ViewBag.Items)
-            {
-                var flag = lvsede == @item ? "selected" : "";
-                <option value="@item" @flag>@item</option>
-            }
-        </select>
+    <div class="form-row">
+        <div class="form-group">
+            <label class="col-form-label">SEDE:</label>
+            <select class="form-control"  name="sede">
+                @foreach (string item in ViewBag.Items)
+                {
+                    var flag = lvsede == @item ? "selected" : "";
+                    <option value="@item" @flag>@item</option>
+                }
+            </select>
+        </div>
+        <div class="form-group ml-5">
+            <label class="col-form-label">Data Inicial:</label>
+            <input type="datetime" class="form-control dates" id="dataInicialId" name="initialDate" placeholder="dd/MM/aaaa">
+        </div>
+        <div class="form-group ml-5">
+            <label class="col-form-label">Data Final:</label>
+            <input type="datetime" class="form-control dates" id="dataFinalId" name="finalDate" placeholder="dd/MM/aaaa">
+        </div>
+        <button class="btn btn-primary">Filtrar</button>
     </div>
 }
 
@@ -80,4 +91,16 @@
 </table>
 @section Scripts{
     @Scripts.Render("~/bundles/tableTU")
+    <script>
+        $(".dates").datepicker({
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'],
+            monthNames: ['Janeiro', 'Fervereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fer', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior'
+        });
+    </script>
 }
