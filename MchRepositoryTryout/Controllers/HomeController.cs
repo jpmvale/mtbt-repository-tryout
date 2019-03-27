@@ -26,9 +26,22 @@ namespace MchRepositoryTryout.Controllers
 
         public ActionResult TableTU(string sede = "SLZ", string initialDate = default(string), string finalDate = default(string))
         {
+            List<TU> tus = GetMTBT(sede, initialDate, finalDate);
+            return View(tus);
+        }
+
+        public ActionResult GetDataFromTU(string sede = "SLZ", string initialDate = default(string), string finalDate = default(string))
+        {
+            List<TU> tus = GetMTBT(sede, initialDate, finalDate);
+            return Json(tus);
+        }
+
+        private List<TU> GetMTBT(string sede, string initialDate, string finalDate)
+        {
             int init = 0;
             int end = 892;
-            DateTime lvInitialDate = initialDate == default(string) ? DateTime.Parse(string.Format("{0}/{1}/{2}", "01", (DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month : DateTime.Now.Month.ToString()), DateTime.Now.Year)).Date :
+            DateTime lvInitialDate = initialDate == default(string) ? DateTime.Parse(string.Format("{0}/{1}/{2}", "01",
+                                      (DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month : DateTime.Now.Month.ToString()), DateTime.Now.Year)).Date :
                                       DateTime.Parse(initialDate).Date;
             DateTime lvFinalDate = finalDate == default(string) ? DateTime.Now.Date : DateTime.Parse(finalDate).Date;
 
@@ -49,7 +62,7 @@ namespace MchRepositoryTryout.Controllers
             ViewBag.InitialDate = lvInitialDate;
             ViewBag.FinalDate = lvFinalDate;
             ViewBag.Items = items;
-            return View(tus);
+            return tus;
         }
 
         public ActionResult About()

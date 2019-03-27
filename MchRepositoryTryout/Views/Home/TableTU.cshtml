@@ -16,28 +16,37 @@
 <h4 class="center text-danger">@lvsede</h4>
 @using (Html.BeginForm("TableTU", "Home", FormMethod.Post))
 {
-    <div class="form-row">
-        <div class="form-group">
-            <label class="col-form-label">SEDE:</label>
-            <select class="form-control"  name="sede">
-                @foreach (string item in ViewBag.Items)
-                {
-                    var flag = lvsede == @item ? "selected" : "";
-                    <option value="@item" @flag>@item</option>
-                }
-            </select>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="col-form-label">SEDE:</label>
+                    <select class="form-control" name="sede" id="sede">
+                        @foreach (string item in ViewBag.Items)
+                        {
+                            var flag = lvsede == @item ? "selected" : "";
+                            <option value="@item" @flag>@item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group ml-5">
+                    <label class="col-form-label">Data Inicial:</label>
+                    <input type="datetime" class="form-control dates" id="dataInicialId" name="initialDate" placeholder="dd/MM/yyyy" value="@lvInitalDate.ToString("dd/MM/yyyy")">
+                </div>
+                <div class="form-group ml-5">
+                    <label class="col-form-label">Data Final:</label>
+                    <input type="datetime" class="form-control dates" id="dataFinalId" name="finalDate" placeholder="dd/MM/yyyy" value="@lvFinalDate.ToString("dd/MM/yyyy")">
+                </div>
+
+            </div>
         </div>
-        <div class="form-group ml-5">
-            <label class="col-form-label">Data Inicial:</label>
-            <input type="datetime" class="form-control dates" id="dataInicialId" name="initialDate" placeholder="dd/MM/yyyy" value="@lvInitalDate.ToString("dd/MM/yyyy")"> 
+        <div class="vertical">
+            <button class="alignButtonVertical btn btn-outline-primary btn-group-vertical">Filtrar</button>
         </div>
-        <div class="form-group ml-5">
-            <label class="col-form-label">Data Final:</label>
-            <input type="datetime" class="form-control dates" id="dataFinalId" name="finalDate" placeholder="dd/MM/yyyy" value="@lvFinalDate.ToString("dd/MM/yyyy")">
-        </div>
-        <button class="btn btn-primary">Filtrar</button>
     </div>
 }
+
+<div id="container" style="width:100%; height:400px;"></div>
 
 <table class="table innerTable lowPadding noMarginBottom">
     <tr class="tableHeader lowPadding">
@@ -59,7 +68,10 @@
                 <table class="table innerTable lowPadding noMarginBottom">
                     <tr class="bg-dark lowPadding">
                         <th class="center text-white lowPadding">AMV</th>
-                        <th class="center text-white lowPadding">Dados MCH</th>
+                        <th class="center text-white lowPadding">Máquinas de Chave</th>
+                        <th class="center text-white lowPadding">Trens Carregados</th>
+                        <th class="center text-white lowPadding">Trens Vazios</th>
+                        <th class="center text-white lowPadding">MTBT</th>
                         <th class="amvDetail lowPadding">+</th>
                     </tr>
                     @foreach (var amv in item.AmvsInTU)
@@ -67,26 +79,15 @@
                         <tr class="amvLine lowPadding">
                             <td class="vertical lowPadding">@amv.AmvNumber</td>
                             <td class="lowPadding">
-                                <table class="table innerTable noMarginBottom ">
-                                    <tr class="bg-secondary lowPadding">
-                                        <th class="center text-white lowPadding">Id</th>
-                                        <th class="center text-white lowPadding">Nome</th>
-                                        <th class="center text-white lowPadding">Trens</th>
-                                        <th class="center text-white lowPadding">MTBT</th>
-                                        <th class="mchDetail lowPadding">+</th>
-                                    </tr>
-                                    @foreach (var mch in amv.MchsInAmv)
-                                    {
-                                        <tr class="mchLine lowPadding">
-                                            <td class="lowPadding">@mch.Id</td>
-                                            <td class="lowPadding">@mch.InstallLocation</td>
-                                            <td class="lowPadding">@mch.Trains</td>
-                                            <td class="text-danger lowPadding">@mch.MTBT</td>
-                                            <td class="lowPadding"></td>
-                                        </tr>
-                                    }
-                                </table>
+                                @("| ")
+                                @foreach (var mch in amv.MchsInAmv)
+                                {
+                                    @(mch.InstallLocation + " | ")
+                                }
                             </td>
+                            <td class="lowPadding">@amv.MchsInAmv[0].LoadedTrains</td>
+                            <td class="lowPadding">@amv.MchsInAmv[0].EmptyTrains</td>
+                            <td class="text-danger lowPadding">@Math.Round(amv.MchsInAmv[0].MTBT, 2)</td>
                         </tr>
                     }
                 </table>
@@ -108,4 +109,6 @@
             prevText: 'Anterior'
         });
     </script>
+    @Scripts.Render("~/bundles/highcharts")
+    @Scripts.Render("~/bundles/MchCharts")
 }

@@ -28,6 +28,13 @@ namespace MchRepositoryTryout
             bundles.Add(new ScriptBundle("~/bundles/tableTU").Include(
                     "~/Scripts/tableTU.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
+                   "~/Scripts/highcharts.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/mchcharts").Include(
+                   "~/Scripts/MchChart.js"));
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",

@@ -9,7 +9,8 @@ namespace MchRepositoryTryout.Models
     {
         public int Id { get; set; }
         public string InstallLocation { get; set; }
-        public int Trains { get; set; }
+        public int LoadedTrains { get; set; }
+        public int EmptyTrains { get; set; }
         public double MTBT { get; set; }
     }
 }

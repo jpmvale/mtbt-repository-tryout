@@ -60,3 +60,11 @@ textarea {
 .noMarginBottom {
     margin-bottom : 0px !important;
 }
+
+.alignButtonVertical {
+    margin-top : 2.4rem !important;
+}
+
+.alignButtonHorizontal {
+    margin-right: 3rem !important;
+}
