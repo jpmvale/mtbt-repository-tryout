@@ -35,10 +35,15 @@ namespace MchRepositoryTryout
                    "~/Scripts/MchChart.js"));
 
 
+            bundles.Add(new ScriptBundle("~/bundles/tingle").Include(
+                   "~/Scripts/tingle.js"));
+
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/Content/jquery-ui.css"));
+                      "~/Content/jquery-ui.css",
+                      "~/Content/tingle.css"));
         }
     }
 }

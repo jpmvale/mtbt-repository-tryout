@@ -1,4 +1,11 @@
-﻿function doAjax(url, data) {
+﻿function getArrayWithNoRepetitions (array) {
+    var lvArray = array.filter(function (elem, i, array) {
+        return array.indexOf(elem) === i;
+    });
+    return lvArray;
+}
+
+function doAjax(url, data) {
     var options = {
         url: url,
         headers: {
@@ -46,18 +53,22 @@ function createChart(data) {
     });
 
     var categories = data.map(function (elem) {
-        return 'KM ' + elem.Km ;
+        return 'KM ' + elem.Km;
     });
 
     var amvCount = [];
 
     for (var i = 0; i <= 3; i++) {
         amvCount.push(data.map(function (elem) {
-            return elem.AmvsInTU[i].MchsInAmv[0].LoadedTrains;
+            var myTrains = (elem.AmvsInTU[i].MchsInAmv[0].LoadedTrains.map(function (innerElem) {               
+                return innerElem.TrainID;
+            }));
+            var lvr = getArrayWithNoRepetitions(myTrains);          
+            return lvr.length;
         }));
     }
     chart.xAxis[0].setCategories(categories);
-    console.log(amvCount);
+
     for (var i = 1; i <= amvCount.length; i++) {
         console.log(amvCount[i - 1]);
         chart.addSeries({
@@ -73,12 +84,11 @@ function getData() {
     var finalDate = document.getElementById("dataFinalId").value;
 
     doAjax('/Home/GetDataFromTU', '{sede:"' + sede + '", initialDate: "' + initialDate + '", finalDate:"' + finalDate + '"}').
-        then(function (data) {
-            console.log(data);
+        then(function (data) {          
             createChart(data);
         },
             function (err) {
-                alert(err);
+                console.log(err);
             });
 }
 

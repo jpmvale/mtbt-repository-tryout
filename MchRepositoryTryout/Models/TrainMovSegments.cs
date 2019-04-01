@@ -22,7 +22,7 @@ namespace MchRepositoryTryout.Models
         [Column("track")]
         public int Track { get; set; }
         [Column("direction")]
-        public int Direction { get; set; }
+        public int Direction { get; set; }        
 
     }
 }

@@ -12,8 +12,7 @@
 }
 
 <h2 class="center">MTBT Report</h2>
-<h4 class="center"> Sede Selecionada:</h4>
-<h4 class="center text-danger">@lvsede</h4>
+
 @using (Html.BeginForm("TableTU", "Home", FormMethod.Post))
 {
     <div class="row">
@@ -85,8 +84,20 @@
                                     @(mch.InstallLocation + " | ")
                                 }
                             </td>
-                            <td class="lowPadding">@amv.MchsInAmv[0].LoadedTrains</td>
-                            <td class="lowPadding">@amv.MchsInAmv[0].EmptyTrains</td>
+                            <td class="lowPadding">
+                                <a onclick="details(document.getElementById('dataInicialId').value,
+                                document.getElementById('dataFinalId').value,
+                                @amv.AmvNumber,
+                                @item.Km,
+                                -1)">@amv.MchsInAmv[0].LoadedTrains.Select(x => x.TrainID).Distinct().Count()</a>
+                            </td>
+                            <td class="lowPadding">
+                                <a onclick="details(document.getElementById('dataInicialId').value,
+                                document.getElementById('dataFinalId').value,
+                                @amv.AmvNumber,
+                                @item.Km,
+                                1)">@amv.MchsInAmv[0].EmptyTrains.Select(x => x.TrainID).Distinct().Count()</a>
+                            </td>
                             <td class="text-danger lowPadding">@Math.Round(amv.MchsInAmv[0].MTBT, 2)</td>
                         </tr>
                     }
@@ -96,6 +107,7 @@
     }
 </table>
 @section Scripts{
+    @Scripts.Render("~/bundles/tingle")
     @Scripts.Render("~/bundles/tableTU")
     <script>
         $(".dates").datepicker({
