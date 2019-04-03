@@ -9,9 +9,10 @@ using MchRepositoryTryout.Models;
 namespace MchRepositoryTryout.Services
 {
     public class TuService
-    {
-        private static List<int> typeA = new List<int>() { 396, 431, 442, 450 }; // Instantiate all the list of type A TUs
-        private static readonly string[] machines = new string[] { "W11A", "W11B", "W11C", "W21A", "W21B", "W21C", "W12A", "W12B", "W12C", "W22A", "W22B", "W22C" };
+    {      
+        private static readonly string[] machines = new string[] {
+            "W11A", "W11B", "W11C", "W21A", "W21B", "W21C", "W12A", "W12B", "W12C", "W22A", "W22B", "W22C"
+        };
 
 
         public static List<TU> GetTu(DateTime initialDate, DateTime finalDate, int initialKM = 0, int finalKM = 892) //Return the list of TUs
@@ -32,18 +33,18 @@ namespace MchRepositoryTryout.Services
 
                 foreach (var train in trains)
                 {
-                    var lm = trainBySegmentObjects.Where(x => x.TrainID == train).OrderBy(x => x.OcupationDate);
-                    var direction = lm.FirstOrDefault().Direction;
-                    var tracks = lm.Select(x => x.Track).ToList();
-                    TU.TypesOfTU type = typeA.Contains(segment.Location) ? TU.TypesOfTU.A : TU.TypesOfTU.V;
+                    var trainMov = trainBySegmentObjects.Where(x => x.TrainID == train).OrderBy(x => x.OcupationDate);
+                    var direction = trainMov.FirstOrDefault().Direction;
+                    var tracks = trainMov.Select(x => x.Track).ToList();
+                    TU.TypesOfTU type = Constants.TUTypeA.Contains(segment.Location) ? TU.TypesOfTU.A : TU.TypesOfTU.V;
                     var mchs = GetMchByOccupations(tracks, direction, type);
 
                     mchs.ForEach(x =>
                     {
                         var emptyTrains = keyValuePairs[x].Item1;
-                        emptyTrains.AddRange(lm.Where(y => y.Direction == 1));
+                        emptyTrains.AddRange(trainMov.Where(y => y.Direction == 1));
                         var loadedTrains = keyValuePairs[x].Item2;
-                        loadedTrains.AddRange(lm.Where(y => y.Direction == -1));
+                        loadedTrains.AddRange(trainMov.Where(y => y.Direction == -1));
                         keyValuePairs[x] = new Tuple<List<TrainMovSegments>, List<TrainMovSegments>>(emptyTrains, loadedTrains);
                     });
                 }
@@ -52,7 +53,7 @@ namespace MchRepositoryTryout.Services
                   new TU
                   {
                       Km = segment.Location,
-                      TypeOfTU = typeA.Contains(segment.Location) ? TU.TypesOfTU.A : TU.TypesOfTU.V,
+                      TypeOfTU = Constants.TUTypeA.Contains(segment.Location) ? TU.TypesOfTU.A : TU.TypesOfTU.V,
                       AmvsInTU = new List<Amv>()
                       {
                         new Amv
@@ -86,7 +87,9 @@ namespace MchRepositoryTryout.Services
                                 }
                             }
                         },
-                        new Amv{AmvNumber = 2,
+                        new Amv
+                        {
+                            AmvNumber = 2,
                             MchsInAmv = new List<Mch>()
                             { //AMV2
                                 new Mch
@@ -186,34 +189,21 @@ namespace MchRepositoryTryout.Services
         }
 
         public static List<TrainMovSegments> GetTrainsBySegment(SgfContext sgfContext, int location, DateTime initialDate,
-                                                                 DateTime finalDate) // return the list of train movement by segments 
+                                                                 DateTime finalDate) // return the list of train movement by segments from the DB 
         {
             return sgfContext.TrainMovSegments.Include(x => x.Train).
                     Where(x => x.Segment == "WT" && x.Train.TrainName.StartsWith("M") &&
                     x.Location == location && x.OcupationDate >= initialDate && x.OcupationDate <= finalDate).ToList();
         }
 
-        private static double GetTrainMTBT(int emptyTrains, int loadedTrains)
+        private static double GetTrainMTBT(int emptyTrains, int loadedTrains)//Just evaluate the amount of MTBT on loaded and empty trains
         {
             return (loadedTrains * (Constants.LocomotivesInTrain * (Constants.LocomotiveTare) + Constants.WagonsInTrain * ((Constants.LoadedWagonGDT +
                     Constants.LoadedWagonGDU) / 2 + Constants.WagonTare)) / Math.Pow(10, 6)) +
                     (emptyTrains * (Constants.LocomotivesInTrain * (Constants.LocomotiveTare) + Constants.WagonsInTrain * (Constants.WagonTare)) / Math.Pow(10, 6));
         }
-
-        private static double GetTrainMTBT(bool isLoaded) //Just evaluate the amount of MTBT on loaded and empty trains
-        {
-            if (isLoaded)
-            {
-                return (Constants.LocomotivesInTrain * (Constants.LocomotiveTare) + Constants.WagonsInTrain * ((Constants.LoadedWagonGDT +
-                                Constants.LoadedWagonGDU) / 2 + Constants.WagonTare)) / Math.Pow(10, 6);
-            }
-            else
-            {
-                return (Constants.LocomotivesInTrain * (Constants.LocomotiveTare) + Constants.WagonsInTrain * (Constants.WagonTare)) / Math.Pow(10, 6);
-            }
-        }
-
-        private static List<string> GetMchByOccupations(List<int> tracks, int direction, TU.TypesOfTU type)
+        
+        private static List<string> GetMchByOccupations(List<int> tracks, int direction, TU.TypesOfTU type)//return a list of string with the name of the mchs
         {     //Add the followings MCHs to the respective AMV
             var amv_1 = new List<string>() { "W11A", "W11B", "W11C" };
             var amv_2 = new List<string>() { "W21C", "W21B", "W21A" };

@@ -30,7 +30,7 @@ namespace MchRepositoryTryout.Controllers
             List<TU> tus = GetTU(sede, initialDate, finalDate);
             JsonResult jsonResult = Json(tus, JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;
-            return jsonResult;           
+            return jsonResult;
         }
 
         // public ActionResult GetTrainsData(int Km, int Amv, string initialDate = default(string), string finalDate = default(string))
@@ -83,8 +83,9 @@ namespace MchRepositoryTryout.Controllers
 
                 if (lvamv != null)
                 {
-                    trainMovSegments = mode == 1 ? lvamv.MchsInAmv.FirstOrDefault().EmptyTrains.OrderBy(x => x.OcupationDate).ToList() :
-                                                   lvamv.MchsInAmv.FirstOrDefault().LoadedTrains.OrderBy(x => x.OcupationDate).ToList();
+                    int track = !Constants.TUTypeA.Contains(Km) ? ((Amv == 1 || Amv == 2) ? 1 : 2) : ((Amv == 1 || Amv == 2) ? 2 : 1);
+                    trainMovSegments = mode == 1 ? lvamv.MchsInAmv.FirstOrDefault().EmptyTrains.Where(x => x.Track == track).OrderBy(x => x.OcupationDate).ToList() :
+                                                   lvamv.MchsInAmv.FirstOrDefault().LoadedTrains.Where(x => x.Track == track).OrderBy(x => x.OcupationDate).ToList();
                 }
             }
 

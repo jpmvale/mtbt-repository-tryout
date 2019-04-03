@@ -13,5 +13,6 @@ namespace MchRepositoryTryout.Services
         public static readonly int LoadedWagonGDU = 130;
         public static readonly int WagonsInTrain = 330;
         public static readonly int LocomotivesInTrain = 3;
+        public static readonly List<int> TUTypeA = new List<int>() { 396, 431, 442, 450 }; // Instantiate all the list of type A TUs
     }
 }
