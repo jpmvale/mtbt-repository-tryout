@@ -155,6 +155,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Amv.cs" />
+    <Compile Include="Models\Composition.cs" />
     <Compile Include="Models\Mch.cs" />
     <Compile Include="Models\Segments.cs" />
     <Compile Include="Models\Train.cs" />

@@ -13,5 +13,7 @@ namespace MchRepositoryTryout.Models
         public long TrainID { get; set; }
         [Column("name")]
         public string TrainName { get; set; }
+        [Column("OSSGF")]
+        public string OS { get; set; }
     }
 }

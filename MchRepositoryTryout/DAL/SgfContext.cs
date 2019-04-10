@@ -18,5 +18,6 @@ namespace MchRepositoryTryout.DAL
         public IDbSet<Segments> Segments { get; set; }
         public IDbSet<Train> Trains { get; set; }
         public IDbSet<TrainMovSegments> TrainMovSegments { get; set; }
+        public IDbSet<Composition> Compositions { get; set; }
     }
 }
